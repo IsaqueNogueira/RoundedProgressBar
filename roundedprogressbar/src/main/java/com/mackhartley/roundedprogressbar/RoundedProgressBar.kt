@@ -37,7 +37,6 @@ class RoundedProgressBar @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     companion object {
-        private const val MAX_PROGRESS = 100.0
         private const val MIN_PROGRESS = 0.0
         private const val PROGRESS_BAR_MAX = 100
         private const val PROGRESS_SCALAR = 10 // This is done to make the progress bar animation more fine grain and thus smoother
@@ -289,7 +288,6 @@ class RoundedProgressBar @JvmOverloads constructor(
     private fun getNormalizedValue(progressPercentage: Double): Double {
         return when {
             progressPercentage < MIN_PROGRESS -> MIN_PROGRESS
-            progressPercentage > MAX_PROGRESS -> MAX_PROGRESS
             else -> progressPercentage
         }
     }

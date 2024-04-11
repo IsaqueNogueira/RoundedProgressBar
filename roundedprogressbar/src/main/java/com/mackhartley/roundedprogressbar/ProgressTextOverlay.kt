@@ -70,18 +70,30 @@ internal class ProgressTextOverlay @JvmOverloads constructor(
 
             val progressDrawableWidth = width * progressValue
             val requiredTextContainerWidth = textContainerWidth + (2 * textSidePadding)
-            val xPosition: Float
+            var xPosition: Float = 0f // Inicializa xPosition
+
             if (requiredTextContainerWidth < progressDrawableWidth) { // should use inside position
                 // Inside position = (Position to draw) - (Width of text) - (Padding of text)
                 xPosition = (width * progressValue) - textContainerWidth - textSidePadding
-                canvas?.drawText(progressTextFormatter.getProgressText(progressValue), xPosition, yPosition, progressTextOverlayPaint)
             } else { // should use outside position
                 // Outside position = (Position to draw) + (Padding of text)
                 xPosition = (width * progressValue) + textSidePadding
-                canvas?.drawText(progressTextFormatter.getProgressText(progressValue), xPosition, yPosition, backgroundTextOverlayPaint)
             }
+
+            // Adiciona uma pequena margem à direita do texto
+            val textWidth = progressTextOverlayPaint.measureText(progressTextFormatter.getProgressText(progressValue))
+            val margin = 12f // Margem de 8 pixels
+            if (xPosition + textWidth + margin > width) {
+                // Se ultrapassar, ajusta a posição x do texto
+                xPosition = width - textWidth - margin
+            }
+
+            // Desenha o texto
+            canvas?.drawText(progressTextFormatter.getProgressText(progressValue), xPosition, yPosition, progressTextOverlayPaint)
         }
     }
+
+
 
     /**
      * Not used often, mainly when first initializing the view or changing text size
