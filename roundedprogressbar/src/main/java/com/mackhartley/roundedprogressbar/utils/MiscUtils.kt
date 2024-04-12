@@ -37,19 +37,8 @@ fun getPercentageString(
     onlyShowTrue0: Boolean,
     onlyShowTrue100: Boolean
 ): String {
-    val percentage = completionRatio * 100
+    val percentage = completionRatio * 100f
+    val formattedValue = String.format("%.2f", percentage)
 
-    val intValue: Int = when {
-        percentage > 0f && percentage < 1f -> {
-            if (onlyShowTrue0) 1
-            else percentage.roundToInt()
-        }
-        percentage > 99f && percentage < 100f -> {
-            if (onlyShowTrue100) 99
-            else percentage.roundToInt()
-        }
-        else -> percentage.roundToInt()
-    }
-
-    return "$intValue%"
+    return "$formattedValue%"
 }
